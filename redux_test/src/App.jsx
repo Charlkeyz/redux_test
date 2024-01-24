@@ -11,10 +11,10 @@ function App() {
   useEffect(()=> {
     async function fetchData(){
       try {
-        const response = await fetch(`https://dummyjson.com/products/`);
+        const response = await fetch(`https://dummyjson.com/products/${selectData.index}`);
         const data = await response.json()
         dispatch(setData(data))
-        dispatch(setIndex(Math.floor( selectData.index + 1)))
+        dispatch(setIndex(Math.floor(Math.random() + selectData.index)))
 
         // console.log(data)
       } catch (error) {
@@ -23,7 +23,7 @@ function App() {
     }
     fetchData()
 
-  }, [dispatch])
+  }, [dispatch, ])
 
   function nextButton(){
     dispatch(setNext(selectData.next + 1))

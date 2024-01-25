@@ -1,58 +1,57 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
-import { useEffect } from 'react'
+import { useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import './App.css'
-import { setData, setNext, setPrevious, setIndex } from './Redux/slice/counterSlice'
+import {  setIndex, setData } from './Redux/slice/counterSlice'
+
+
 
 function App() {
   const selectData = useSelector((state)=> state.phone_accessories)
   const dispatch = useDispatch()
+  
+  
+  async function fetchData(){
+    try {
+      const response = await fetch(`https://dummyjson.com/products/${selectData.index}`);
+      const data = await response.json()
+      dispatch(setData(data))
 
-  useEffect(()=> {
-    async function fetchData(){
-      try {
-        const response = await fetch(`https://dummyjson.com/products/${selectData.index}`);
-        const data = await response.json()
-        dispatch(setData(data))
-        dispatch(setIndex(Math.floor(Math.random() + selectData.index)))
-
-        // console.log(data)
-      } catch (error) {
-         console.log("error code:", error)
-      }
+      // console.log(data)
+      
+      
+    } catch (error) {
+       console.log("error code:", error)
     }
-    fetchData()
+  }
 
-  }, [dispatch, ])
+  useEffect(()=> {   
+    fetchData() 
+  }, [])
 
   function nextButton(){
-    dispatch(setNext(selectData.next + 1))
+    dispatch(setIndex(selectData.index + 1))
   }
-  // function trackIndex(){
-  //   dispatch(setIndex(Math.floor(Math.random + selectData.index)))
-  // }
+  
+  
   function previousButton(){
-    dispatch(setPrevious(selectData.previous - 1))
+    dispatch(setIndex(selectData.index - 1))
   }
-  // console.log(selectData.next)
+  console.log(selectData)
+
+  
 
   return (
     <>
       <div>
-        {
-          // selectData.data.products.map((item)=> (
-             
-          //   <div key={item.id}>
-          //     <h1>{console.log(item[1])}</h1>
-              
-          //   </div>
-          
-
-          // ))
-          console.log(selectData.data)
-
-    
-        }
+      {selectData.data && (
+          <>
+            <h1>{selectData.data.title}</h1>
+          </>
+        )}
+      
+        
         <button onClick={nextButton}>next</button>
         <button onClick={previousButton}>previous</button>
       </div>

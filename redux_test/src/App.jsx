@@ -18,7 +18,7 @@ function App() {
       const data = await response.json()
       dispatch(setData(data))
 
-      // console.log(data)
+      
       
       
     } catch (error) {
@@ -36,9 +36,11 @@ function App() {
   
   
   function previousButton(){
-    dispatch(setIndex(selectData.index - 1))
+    const prevIndex = selectData.index - 1
+    prevIndex >= 0 ? dispatch(setIndex(prevIndex)): null
+    
   }
-  console.log(selectData)
+  // console.log(selectData)
 
   
 
@@ -55,12 +57,15 @@ function App() {
       </div>
       )}
       
+      <div style={{display: "flex", justifyContent: "space-between"}}>
+        <button onClick={nextButton}>next</button>
+        <button onClick={previousButton}>previous</button>
+      </div>
       
 
           
         
-        <button onClick={nextButton}>next</button>
-        <button onClick={previousButton}>previous</button>
+       
       </div>
     </>
   )

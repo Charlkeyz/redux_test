@@ -28,7 +28,7 @@ function App() {
 
   useEffect(()=> {   
     fetchData() 
-  }, [])
+  }, [selectData.index])
 
   function nextButton(){
     dispatch(setIndex(selectData.index + 1))
@@ -45,12 +45,19 @@ function App() {
   return (
     <>
       <div>
-      {selectData.data && (
-          <>
-            <h1>{selectData.data.title}</h1>
-          </>
-        )}
+      {selectData.data && selectData.data.images && selectData.data.images.length > 0 && (
+      <div>
+        <h1>{selectData.data.title}</h1>
+        <img src={selectData.data.images[0]} alt="product images" />
+        <p>Price: ${selectData.data.price}</p>
+        <p>Description: {selectData.data.description}</p>
+
+      </div>
+      )}
       
+      
+
+          
         
         <button onClick={nextButton}>next</button>
         <button onClick={previousButton}>previous</button>
